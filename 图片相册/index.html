@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+			}
+
+			#box {
+				position: relative;
+			}
+
+			#small_box {
+				width: 500px;
+				height: 325px;
+				position: relative;
+			}
+
+			#small_box img {
+				width: 500px;
+				height: 325px;
+			}
+
+			#small_box #mask {
+				width: 250px;
+				height: 160px;
+				position: absolute;
+				left: 0;
+				top: 0;
+				background-color: rgba(188, 197, 232, 0.6);
+				display: none;
+			}
+
+			#big_box {
+				width: 500px;
+				height: 325px;
+				position: absolute;
+				left: 510px;
+				top: 0;
+				overflow: hidden;
+				display: none;
+			}
+
+			#big_box img {
+				width: 1000px;
+				height: 666px;
+				position: absolute;
+			}
+
+			ul {
+				list-style: none;
+				overflow: hidden;
+			}
+
+			ul li {
+				float: left;
+				width: 100px;
+				height: 68px;
+				margin-left: 18px;
+				margin-top: 10px;
+			}
+
+			ul li img {
+				width: 100px;
+				height: 68px;
+			}
+
+			ul li.active {
+				border-bottom: 3px solid red;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box">
+			<div id="small_box">
+				<img src="img/house1.jpg" class="imgShow">
+				<span id="mask">
+
+				</span>
+			</div>
+			<div id="big_box">
+				<img src="img/house1.jpg" class="imgShow">
+			</div>
+		</div>
+
+		<ul>
+			<li class="active">
+				<img src="img/house1.jpg" class="thumbnails">
+			</li>
+			<li>
+				<img src="img/house2.jpg" class="thumbnails">
+			</li>
+			<li>
+				<img src="img/house3.jpg" class="thumbnails">
+			</li>
+			<li>
+				<img src="img/house4.jpg" class="thumbnails">
+			</li>
+		</ul>
+
+		<script type="text/javascript">
+			var imgShow = document.getElementsByClassName("imgShow");
+			var thumbnails = document.getElementsByClassName("thumbnails");
+			var imgShow_length = imgShow.length;
+			var thumbnails_length = thumbnails.length;
+
+			var box = document.getElementById("box");
+			var small_box = box.children[0];
+			var small_img = small_box.children[0];
+			var mask = small_box.children[1];
+			var big_box = box.children[1];
+			var big_img = big_box.children[0];
+
+			//给全部缩略图添加事件
+			for (let i = 0; i < thumbnails_length; i++) {
+				thumbnails[i].onmouseover = function() {
+					//清除全部缩略图的active类
+					for (let i = 0; i < thumbnails_length; i++) {
+						thumbnails[i].parentNode.setAttribute("class", "");
+					}
+					//给当前li元素添加active类
+					this.parentNode.setAttribute("class", "active");
+					var thumbnailsSrc = this.getAttribute("src");
+					//修改展示图的src
+					for (let i = 0; i < imgShow_length; i++) {
+						imgShow[i].setAttribute("src", thumbnailsSrc);
+					}
+				}
+			}
+
+			//监听鼠标移入事件
+			small_box.onmouseover = function() {
+				mask.style.display = "block";
+				big_box.style.display = "block";
+				//监听鼠标移动事件
+				small_box.onmousemove = function(e) {
+					var e = e || window.event;
+					//计算mask盒子的水平与垂直的偏移量
+					var moveX = e.clientX - mask.clientWidth * 0.5;
+					var moveY = e.clientY - mask.clientHeight * 0.5;
+					//边界处理
+					if (moveX < 0) {
+						moveX = 0;
+					} else if (moveX >= small_box.clientWidth - mask.clientWidth) {
+						moveX = small_box.clientWidth - mask.clientWidth;
+					}
+					if (moveY < 0) {
+						moveY = 0;
+					} else if (moveY >= small_box.clientHeight - mask.clientHeight) {
+						moveY = small_box.clientHeight - mask.clientHeight;
+					}
+					//让mask盒子动起来
+					mask.style.left = moveX + "px";
+					mask.style.top = moveY + "px";
+					//求小图与大图的比例关系
+					var x = moveX / small_box.clientWidth;
+					var y = moveY / small_box.clientHeight;
+					//让大图动起来
+					big_img.style.left = -x * big_img.clientWidth + "px";
+					big_img.style.top = -y * big_img.clientHeight + "px";
+				}
+			}
+
+			//监听鼠标离开事件
+			small_box.onmouseleave = function() {
+				mask.style.display = "none";
+				big_box.style.display = "none";
+			}
+		</script>
+	</body>
+</html>

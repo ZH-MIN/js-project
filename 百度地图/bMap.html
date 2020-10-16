@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+		<style type="text/css">
+			body,
+			html,
+			#allmap {
+				width: 100%;
+				height: 100%;
+				overflow: hidden;
+				margin: 0;
+				font-family: "微软雅黑";
+			}
+
+			form {
+				position: absolute;
+				top: 10px;
+				left: 50%;
+				transform: translateX(-50%);
+				height: 24px;
+				border: 1px solid #000;
+			}
+
+			form input {
+				float: left;
+				height: 22px;
+				border: none;
+				outline: none;
+			}
+
+			.text {
+				width: 200px;
+				border-right: 1px solid #000;
+			}
+
+			.btn {
+				width: 80px;
+				height: 24px;
+				cursor: pointer;
+			}
+		</style>
+		<title>异步加载地图</title>
+	</head>
+	<body>
+		<div id="allmap"></div>
+		<form>
+			<input type="text" autocomplete="off" id="cityName" class="text">
+			<input type="button" id="searchBtn" class="btn" value="搜索地图">
+		</form>
+
+		<script type="text/javascript">
+			// 全局地图变量
+			var map;
+			var searchBtn = document.getElementById("searchBtn");
+			
+			// 加载百度地图API
+			function loadJScript() {
+				var script = document.createElement("script");
+				script.type = "text/javascript";
+				script.src = "https://api.map.baidu.com/api?v=2.0&ak=D0GpMDL8gLHmmFc4mBEkiI8p1BjLoOS9&callback=init";
+				document.body.appendChild(script);
+			}
+			
+			// 初始化地图
+			function init() {
+				map = new BMap.Map("allmap"); // 创建Map实例
+				// var point = new BMap.Point(116.404, 39.915); // 创建点坐标
+				map.centerAndZoom("北京", 11);
+				map.enableScrollWheelZoom(); //启用滚轮放大缩小
+			}
+
+			// 监听搜索地图按钮
+			searchBtn.onclick = function() {
+				theLocation();
+			}
+			
+			// 跳转地图
+			function theLocation() {
+				var city = document.getElementById("cityName").value;
+				if (city != "") {
+					map.centerAndZoom(city, 11); // 用城市名设置地图中心点
+				}
+			}
+			
+			//异步加载地图
+			window.onload = loadJScript; 
+		</script>
+	</body>
+</html>

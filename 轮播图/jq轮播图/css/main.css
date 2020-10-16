@@ -1,0 +1,133 @@
+@keyframes load {
+	0% {
+		width: 0%;
+	}
+
+	100% {
+		width: 100%;
+	}
+}
+
+body,
+html {
+	padding: 0;
+	margin: 0;
+}
+
+.container {
+	max-width: 980px;
+	margin: 50px auto;
+}
+
+.trent-slider {
+	width: 100%;
+	height: 545px;
+	position: relative;
+	overflow: hidden;
+}
+
+.t-slide {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	transition: .65s;
+}
+
+.t-slide img {
+	width: 100%;
+	height: 100%;
+}
+
+.t-slider-controls {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+.t-slider-controls .arrow {
+	height: 100%;
+	width: 50px;
+	position: relative;
+	transition: .25s;
+}
+
+.t-slider-controls .arrow:hover {
+	background: rgba(0, 0, 0, 0.32);
+	cursor: pointer;
+}
+
+.t-slider-controls .right-arrow {
+	float: right;
+}
+
+.t-slider-controls .left-arrow {
+	float: left;
+}
+
+.t-slider-controls .arrow .arrow-icon {
+	width: 42px;
+	height: 42px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	color: #fff;
+	text-align: center;
+	font-size: 30px;
+	font-weight: bold;
+}
+
+.t-slider-controls .t-load-bar {
+	width: 100%;
+	height: 5px;
+}
+
+.t-slider-controls .t-load-bar .inner-load-bar {
+	background: rgba(200, 200, 200, 0.65);
+	height: 100%;
+}
+
+.t-slider-controls .t-dots-container {
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	transform: translateX(-50%);
+	height: 20px;
+	width: 80px;
+}
+
+.t-slider-controls .t-slide-dots-wrap {
+	height: 100%;
+	width: 100%;
+	position: relative;
+}
+
+.t-slider-controls .t-slide-dots {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	display: flex;
+	clear: both;
+}
+
+.t-slider-controls .t-slide-dots .t-dot {
+	background: #fff;
+	width: 8px;
+	height: 8px;
+	margin: 5px;
+	float: left;
+	border-radius: 50%;
+	transition: .65s;
+}
+
+.t-slider-controls .t-slide-dots .t-dot.current-dot,
+.t-slider-controls .t-slide-dots .t-dot:hover {
+	transform: scale(1.65);
+	background-color: #ff0000;
+	cursor: pointer;
+}

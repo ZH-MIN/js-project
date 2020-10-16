@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			* {
+				padding: 0;
+				margin: 0;
+			}
+
+			.header {
+				width: 100%;
+				background-color: #eee;
+			}
+
+			.header .weather {
+				position: relative;
+				width: 250px;
+				margin: 0 auto;
+			}
+
+			.header .weather a {
+				display: block;
+				height: 60px;
+				line-height: 60px;
+				color: #222;
+				text-decoration: none;
+				text-align: center;
+			}
+
+			.header .weather a:hover {
+				color: #2caeff;
+			}
+
+			.header .weather a img {
+				width: 30px;
+				height: 30px;
+				margin-left: 2px;
+				vertical-align: -8px;
+			}
+
+			.header .weather a span {
+				margin-left: 2px;
+			}
+
+			.weather-show {
+				position: absolute;
+				top: 60px;
+				left: 50%;
+				transform: translateX(-50%);
+				width: 500px;
+				height: 220px;
+				border-radius: 20px;
+				box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+				display: none;
+			}
+
+			.weather-everyday {
+				float: left;
+				width: 29.3%;
+				height: 200px;
+				text-align: center;
+				cursor: pointer;
+				border-radius: 20px;
+				margin: 10px;
+			}
+
+			.weather-everyday:hover {
+				background-color: #eee;
+			}
+
+			.weather-everyday img {
+				margin-top: 5px;
+			}
+
+			.weather-everyday p {
+				margin-top: 8px;
+				color: #222;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="header">
+			<div class="weather">
+				<a href="javascript:void(0)">
+					<span class="city">东莞</span>
+					<img class="icon" src="">
+					<span class="text"></span>
+					<span class="temp"></span>
+					<span class="windDir"></span>
+				</a>
+				<div class="weather-show">
+					<div class="weather-everyday">
+						<p class="date1"></p>
+						<img class="icon1" src="">
+						<p class="temp1"></p>
+						<p class="text1"></p>
+						<p class="windDir1"></p>
+					</div>
+					<div class="weather-everyday">
+						<p class="date2"></p>
+						<img class="icon2" src="">
+						<p class="temp2"></p>
+						<p class="text2"></p>
+						<p class="windDir2"></p>
+					</div>
+					<div class="weather-everyday">
+						<p class="date3"></p>
+						<img class="icon3" src="">
+						<p class="temp3"></p>
+						<p class="text3"></p>
+						<p class="windDir3"></p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.js"></script>
+		<script type="text/javascript">
+			$(function() {
+				$(".weather a").mouseenter(function() {
+					$(".weather-show").show();
+					$(this).css("color", "#2caeff");
+				});
+				$(".weather").mouseleave(function() {
+					$(".weather-show").hide();
+					$(".weather a").css("color", "#222");
+				});
+
+				function getNowWeather(url) {
+					$.ajax({
+						url: url,
+						method: "get",
+						success: function(res) {
+							if (res.code === "200") {
+								var icon = res.now.icon;
+								var text = res.now.text;
+								var temp = res.now.temp;
+								var windDir = res.now.windDir;
+								$(".icon").attr("src", `imgs/${icon}.png`);
+								$(".text").html(text);
+								$(".temp").html(temp + "℃");
+								$(".windDir").html(windDir);
+							}
+						},
+						error: function(err) {
+							console.log(err);
+						}
+					});
+				}
+
+				function get3dWeather(url) {
+					$.ajax({
+						url: url,
+						method: "get",
+						success: function(res) {
+							if (res.code === "200") {
+								// 今天天气的数据
+								var date1 = res.daily[0].fxDate;
+								var icon1 = res.daily[0].iconDay;
+								var textDay1 = res.daily[0].textDay;
+								var textNight1 = res.daily[0].textNight;
+								var tempMin1 = res.daily[0].tempMin;
+								var tempMax1 = res.daily[0].tempMax;
+								var windDirDay1 = res.daily[0].windDirDay;
+								var windDirNight1 = res.daily[2].windDirNight;
+								// 明天天气的数据
+								var date2 = res.daily[1].fxDate;
+								var icon2 = res.daily[1].iconDay;
+								var textDay2 = res.daily[1].textDay;
+								var textNight2 = res.daily[1].textNight;
+								var tempMin2 = res.daily[1].tempMin;
+								var tempMax2 = res.daily[1].tempMax;
+								var windDirDay2 = res.daily[1].windDirDay;
+								var windDirNight2 = res.daily[2].windDirNight;
+								// 后天天气的数据
+								var date3 = res.daily[2].fxDate;
+								var icon3 = res.daily[2].iconDay;
+								var textDay3 = res.daily[2].textDay;
+								var textNight3 = res.daily[2].textNight;
+								var tempMin3 = res.daily[2].tempMin;
+								var tempMax3 = res.daily[2].tempMax;
+								var windDirDay3 = res.daily[2].windDirDay;
+								var windDirNight3 = res.daily[2].windDirNight;
+
+								// 今天
+								$(".date1").html(date1 + "(今天)");
+								$(".icon1").attr("src", `imgs/${icon1}.png`);
+								$(".temp1").html(tempMin1 + "℃~" + tempMax1 + "℃");
+								if (textDay1 === textNight1) {
+									$(".text1").html(textDay1);
+								} else {
+									$(".text1").html(textDay1 + "转" + textNight1);
+								}
+								if (windDirDay1 === windDirNight1) {
+									$(".windDir1").html(windDirDay1);
+								} else {
+									$(".windDir1").html(windDirDay1 + "转" + windDirNight1);
+								}
+
+								// 明天
+								$(".date2").html(date2 + "(明天)");
+								$(".icon2").attr("src", `imgs/${icon2}.png`);
+								$(".temp2").html(tempMin2 + "℃~" + tempMax2 + "℃");
+								if (textDay2 === textNight2) {
+									$(".text2").html(textDay2);
+								} else {
+									$(".text2").html(textDay2 + "转" + textNight2);
+								}
+								if (windDirDay2 === windDirNight2) {
+									$(".windDir2").html(windDirDay2);
+								} else {
+									$(".windDir2").html(windDirDay2 + "转" + windDirNight2);
+								}
+
+								// 后天
+								$(".date3").html(date3 + "(后天)");
+								$(".icon3").attr("src", `imgs/${icon3}.png`);
+								$(".temp3").html(tempMin3 + "℃~" + tempMax3 + "℃");
+								if (textDay3 === textNight3) {
+									$(".text3").html(textDay3);
+								} else {
+									$(".text3").html(textDay3 + "转" + textNight3);
+								}
+								if (windDirDay3 === windDirNight3) {
+									$(".windDir3").html(windDirDay3);
+								} else {
+									$(".windDir3").html(windDirDay3 + "转" + windDirNight3);
+								}
+							}
+						},
+						error: function(err) {
+							console.log(err);
+						}
+					});
+				}
+				getNowWeather("https://devapi.heweather.net/v7/weather/now?location=101281601&key=4445ae18860c4ebbbd43471bfd513949");
+				get3dWeather("https://devapi.heweather.net/v7/weather/3d?location=101281601&key=4445ae18860c4ebbbd43471bfd513949");
+			});
+		</script>
+	</body>
+</html>

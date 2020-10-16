@@ -1,0 +1,175 @@
+<html>
+	<head>
+		<title>Donot</title>
+		<meta charset="UTF-8">
+		<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			.wrapper {
+				width: 400px;
+				height: 600px;
+				border: 3px solid black;
+				position: relative;
+				margin: 40px auto;
+				overflow: hidden;
+			}
+			
+			.title {
+				position: absolute;
+				bottom: 0;
+				width: 400px;
+				height: 100px;
+				border-top: 3px dashed #eee;
+				font-size: 50px;
+				line-height: 100px;
+				font-weight: bold;
+				text-align: center;
+				background-color: #00FFFF;
+				color: #fff;
+				cursor: pointer;
+				margin: 1px 0 0 1px;
+			}
+			
+			.main {
+				width: 100%;
+				height: 100%;
+				position: absolute;
+				display: none;
+			}
+			
+			.logo {
+				position: absolute;
+				top: 20%;
+				left: 50%;
+				transform: translateX(-50%);
+				width: 200px;
+				margin-left: 10px;
+				font-size: 80px;
+				line-height: 95px;
+				font-family: "STHupo";
+			}
+			
+			.row {
+				width: 100%;
+				height: 150px;
+				overflow: hidden;
+				border-bottom: 1px solid #000;
+				margin-left: -1px;
+			}
+			
+			.col,
+			.target {
+				width: 99px;
+				height: 100%;
+				float: left;
+				border-left: 1px solid #000;
+			}
+			
+			.score {
+				font-size: 30px;
+				font-weight: bold;
+				color: #00FFFF;
+				text-align: center;
+			}
+			
+			.author {
+				width: 100px;
+				position: absolute;
+				top: 55%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+			}
+		</style>
+	</head>
+	<body>
+		<div class="wrapper">
+			<div class="main"></div>
+			<div class="logo">别👣白 块</div>
+			<div class="author">创作者：钟明</div>
+			<div class="title">开始游戏</div>
+		</div>
+		<div class="score"></div>
+		
+		<script type="text/javascript">
+			var score = 0;
+			var speed = 2;
+			var topValue = -150;
+			var color = ['#cc66cc', '#99ff66', '#66ffcc', '#FF7F24'];
+			var title = $(".title");
+			var main = $(".main");
+			var logo = $(".logo");
+			var timer;
+			title.on("click", function() {
+				title.css("display", "none");
+				$(".author").css("display", "none");
+				$(".score").html("分数：" + score);
+				logo.hide();
+				createBlock();
+				timer = setInterval(fun, 10);
+			});
+			
+			function fun() {
+				topValue += speed;
+				main.css({
+					'top': topValue + 'px'
+				});
+				if (parseInt(main.css('top')) > 0) {
+					main.css('top', '-150px');
+					topValue = -150;
+					createBlock();
+				}
+				if (main.children().length >= 5) {
+			
+					for (var i = 0; i < 4; i++) {
+						if (main.children().eq(4).children().eq(i).attr('class') == 'target') {
+							location.reload();
+							alert("游戏结束，您的分数为" + score);
+						}
+					}
+					main.children().eq(5).remove();
+				}
+			}
+			
+			function createBlock() {
+				var row = $("<div class='row'></div>");
+				main.prepend(row);
+				main.css('display', 'block');
+				for (var i = 0; i < 4; i++) {
+					var col = $("<div class='col'></div>");
+					row.append(col);
+					col.on("click", function() {
+						if ($(this).attr("class") == "target") {
+							$(this).css('backgroundColor', 'transparent').attr("class", "col");
+							score++;
+							$(".score").html("分数：" + score);
+							switch (score) {
+								case 15:
+									speed = 3;
+									break;
+								case 45:
+									speed = 4;
+									break;
+								case 90:
+									speed = 5;
+									break;
+								case 150:
+									speed = 6;
+									break;
+							}
+						}else{
+							location.reload();
+							alert("游戏结束，您的分数为" + score);
+						}
+					});
+				}
+				var index = parseInt(Math.random() * 4); //获取0~3的随机数
+				$(row.children()[index]).css('backgroundColor', color[index])
+					.attr('class', 'target');
+			}
+		</script>
+	</body>
+</html>

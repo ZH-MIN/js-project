@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			* {
+				padding: 0;
+				margin: 0;
+			}
+
+			#code {
+				background-color: #ddd;
+				width: 300px;
+				height: 100px;
+				line-height: 100px;
+				color: red;
+				font-size: 50px;
+				font-weight: bold;
+				text-align: center;
+				letter-spacing: 10px;
+			}
+			
+			#box {
+				width: 300px;
+				text-align: center;
+				margin-top: 5px;
+			}
+
+			#inputCode {
+				outline: none;
+				font-size: 20px;
+				border: 1px solid #ddd;
+				width: 200px;
+				height: 30px;
+				color: #4a4a4a;
+			}
+			
+			#validata {
+				width: 90px;
+				height: 31px;
+				border: none;
+				outline: none;
+				background-color: #ddd;
+				cursor: pointer;
+				color: #fff;
+				font-size: 16px;
+			}
+			
+			#validata:hover {
+				background-color: #FFA500;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="code"></div>
+		<div id="box">
+			<input type="text" id="inputCode">
+			<input type="button" id="validata" value="验证">
+		</div>
+
+		<script type="text/javascript">
+			window.onload = function(){
+				//全局验证码
+				var code;
+				//获取事件源
+				var codeDiv = document.getElementById("code");
+				var inputCode = document.getElementById("inputCode");
+				var validata = document.getElementById("validata");
+				//获取随机验证码并输出
+				createCode();
+				
+				//获取min到max之间的整数
+				function random(min,max){
+					return Math.floor(Math.random() * (max - min) + min);
+				}
+				
+				//随机验证码
+				function createCode() {
+					code = "";
+					var codeLength = 4;
+					var randomCode = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, "A", "B", "C",
+						"D", "E", "F", "G", "H", "I", "Z", "K", "L", "M","N", "O",
+						"P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+					for (let i = 0; i < codeLength; i++) {
+						//获取随机数下标范围0~36
+						var index = random(0, 36);
+						code += randomCode[index];
+					}
+					codeDiv.innerHTML = code;
+				}
+				validata.onclick = function(){
+					//获取用户输入的验证码
+					var newCode = inputCode.value.toUpperCase();
+					if(newCode === code){
+						// window.location.href = "";
+						alert("验证成功");
+						inputCode.value = "";
+						createCode();
+					}else{
+						alert("验证码错误");
+						inputCode.value = "";
+						createCode();
+					}
+				}
+			}
+		</script>
+	</body>
+</html>

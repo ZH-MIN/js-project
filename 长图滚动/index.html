@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			* {
+				padding: 0;
+				margin: 0;
+			}
+
+			#box {
+				width: 639px;
+				height: 400px;
+				margin: 100px auto;
+				overflow: hidden;
+				position: relative;
+			}
+
+			#box img {
+				position: absolute;
+				width: 639px;
+				top: 0;
+			}
+
+			#box span {
+				position: absolute;
+				width: 100%;
+				height: 15%;
+			}
+			
+			#box span:hover {
+				background-color: rgba(0, 0, 0, 0.3);
+			}
+
+			#box #top {
+				top: 0;
+			}
+
+			#box #bottom {
+				bottom: 0;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box">
+			<img src="img/长图.jpg" alt="">
+			<span id="top"></span>
+			<span id="bottom"></span>
+		</div>
+
+		<script type="text/javascript">
+			var divTop = document.getElementById("top");
+			var divBottom = document.getElementById("bottom");
+			var img = document.getElementsByTagName("img")[0];
+			var num = 0;
+			var timer = null;
+
+			divTop.onmouseover = function() {
+				clearInterval(timer);
+				timer = setInterval(function() {
+					num += 10;
+					if (num <= 0) {
+						img.style.top = num + "px";
+					} else {
+						clearInterval(timer);
+					}
+				}, 50);
+			}
+
+			divBottom.onmouseover = function() {
+				clearInterval(timer);
+				timer = setInterval(function() {
+
+					num -= 10;
+					if (num >= -2976) {
+						img.style.top = num + "px";
+					} else {
+						clearInterval(timer);
+					}
+				}, 50);
+			}
+
+			divTop.onmouseleave = function() {
+				clearInterval(timer);
+			}
+			
+			divBottom.onmouseleave = function() {
+				clearInterval(timer);
+			}
+		</script>
+	</body>
+</html>

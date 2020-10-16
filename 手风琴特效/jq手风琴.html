@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>jq手风琴</title>
+		<script src="https://libs.baidu.com/jquery/1.11.3/jquery.min.js"></script>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			.wrap {
+				width: 900px;
+				height: 350px;
+				list-style-type: none;
+				position: relative;
+				overflow: hidden;
+			}
+			.wrap li {
+				position: absolute;
+				left: 0;
+				top: 0;
+				cursor: pointer;
+				transition: all 0.5s ease;
+			}
+			.wrap li span {
+				display: block;
+				width: 500px;
+				height: 350px;
+			}
+		</style>
+	</head>
+	<body>
+		<ul class="wrap">
+			<li><span style="background-color: #FF0000;"></span></li>
+			<li><span style="background-color: #FFA500;"></span></li>
+			<li><span style="background-color: #FFFF00;"></span></li>
+			<li><span style="background-color: #00FFFF;"></span></li>
+			<li><span style="background-color: #DA70D6;"></span></li>
+			
+		</ul>
+
+		<script>
+			//初始化图片位置
+			$('.wrap li').each(function(index, item) {
+				let trx = '';
+				trx = index * 100 + 'px';
+				$(item).css({
+					transform: `translateX(${trx})`
+				});
+			});
+			
+			//鼠标进入事件
+			$('.wrap li').hover(function() {
+				//标记当前鼠标所在图片的序号
+				let i = $(this).index();
+				let trx = '';
+				$('.wrap li').each(function(index, item) {
+					//大于序号的向后移动
+					if (index > i) {
+						trx = (index * 100 + 400) + 'px';
+					} else {
+						//小于序号的恢复原来位置
+						trx = (index * 100) + 'px';
+					}
+					$(this).css({
+						transform: `translateX(${trx})`
+					});
+				});
+			}, function() { //回调函数，恢复图片位置
+				$('.wrap li').each(function(index, item) {
+					let trx = '';
+					trx = index * 100 + 'px';
+					$(item).css({
+						transform: `translateX(${trx})`
+					});
+				});
+			});
+		</script>
+	</body>
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<!-- 兼容IE8及以下浏览器支持html5 -->
+		<script src="https://cdn.bootcdn.net/ajax/libs/html5shiv/r29/html5.js"></script>
+		<style type="text/css">
+			* {
+				padding: 0;
+				margin: 0;
+			}
+
+			a {
+				text-decoration: none;
+			}
+
+			ul {
+				list-style: none;
+			}
+
+			nav {
+				width: 100%;
+				height: 50px;
+				line-height: 50px;
+				background-color: #222;
+				color: #ddd
+			}
+
+			.container {
+				margin: 0 auto;
+				padding: 0 15px;
+			}
+
+			.nav-header h2 {
+				float: left;
+			}
+
+			.nav-header a {
+				float: right;
+				width: 30px;
+				height: 30px;
+				border: 1px solid #ddd;
+				padding: 0 10px;
+				margin-top: 10px;
+			}
+
+			.clearfix {
+				content: "";
+				display: block;
+				clear: both;
+			}
+
+			.nav-list {
+				background-color: #222;
+				margin: 0 -15px;
+				border-top: 1px solid #aaa;
+				display: none;
+			}
+
+			.nav-list ul li a {
+				color: #eee;
+				padding: 10px 15px;
+			}
+
+			.nav-list ul li:first-child {
+				display: none;
+			}
+
+			.nav-list ul li:last-child {
+				float: right;
+			}
+
+			@media (min-width: 760px) {
+				.container {
+					width: 730px;
+				}
+				.nav-header {
+					display: none;
+				}
+				.nav-list {
+					display: block;
+				}
+				.nav-list ul li {
+					float: left;
+				}
+			}
+
+			@media (min-width: 960px) {
+				.container {
+					width: 930px;
+				}
+				.nav-list ul li:first-child {
+					display: block;
+				}
+			}
+
+			@media (min-width: 1200px) {
+				.container {
+					width: 1170px;
+				}
+				.nav-header{
+					display: block;
+				}
+				.nav-list ul li:first-child {
+					display: block;
+				}
+				.nav-header a{
+					display: none;
+				}
+				.clearfix{
+					clear: none;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<nav>
+			<div class="container">
+				<div class="nav-header clearfix">
+					<h2>Bootstrap中文网</h2>
+					<a href="javascript:void(0);" class="btn">
+						<svg t="1602166379795" width="30" height="30" class="icon" viewBox="0 0 1073 1024" version="1.1" xmlns="http://www.w3.org/200">
+							<path d="M1.058133 725.230933v-0.989866l-0.512 0.477866zM0 725.230933l0.546133-0.512-0.546133-0.477866zM65.024 682.8032h997.410133v67.9936H65.024zM65.024 478.0032h997.410133v67.9936H65.024zM65.024 273.2032h997.410133v68.027733H65.024z"
+							 p-id="7816" fill="#ddd"></path>
+						</svg>
+					</a>
+				</div>
+				<div class="nav-list clearfix">
+					<ul class="clearfix">
+						<li><a href="#">Bootstrap3中文文档</a></li>
+						<li><a href="#">Bootstrap4中文文档</a></li>
+						<li><a href="#">Sass教程</a></li>
+						<li><a href="#">Less教程</a></li>
+						<li><a href="#">jQuery API</a></li>
+						<li><a href="#">网站实例</a></li>
+						<li><a href="#">关于</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+
+		<script type="text/javascript">
+			window.onload = function() {
+				var btn = document.querySelector(".btn");
+				var list = document.querySelector(".nav-list");
+				var isdown = false;
+				btn.onclick = function(e) {
+					e.stopPropagation();
+					if (isdown) {
+						list.style.display = "none";
+						isdown = false;
+					} else {
+						list.style.display = "block";
+						isdown = true;
+					}
+				}
+				window.onresize = function() {
+					if (document.documentElement.clientWidth > 760) {
+						list.style.display = "block";
+					} else {
+						list.style.display = "none";
+					}
+				}
+			}
+		</script>
+	</body>
+</html>

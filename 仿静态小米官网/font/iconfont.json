@@ -1,0 +1,72 @@
+{
+  "id": "2079251",
+  "name": "mi",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "1841505",
+      "name": "企业",
+      "font_class": "qiye",
+      "unicode": "e729",
+      "unicode_decimal": 59177
+    },
+    {
+      "icon_id": "2069521",
+      "name": "搜索",
+      "font_class": "sousuo",
+      "unicode": "e623",
+      "unicode_decimal": 58915
+    },
+    {
+      "icon_id": "2760460",
+      "name": "右箭头",
+      "font_class": "arrow-right",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "4071132",
+      "name": "F",
+      "font_class": "F",
+      "unicode": "e604",
+      "unicode_decimal": 58884
+    },
+    {
+      "icon_id": "6689135",
+      "name": "充值",
+      "font_class": "chongzhi",
+      "unicode": "e68b",
+      "unicode_decimal": 59019
+    },
+    {
+      "icon_id": "8933329",
+      "name": "时间 历史记录 计时 钟表 线性",
+      "font_class": "history",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
+      "icon_id": "10334160",
+      "name": "电话卡",
+      "font_class": "dianhuaka",
+      "unicode": "e602",
+      "unicode_decimal": 58882
+    },
+    {
+      "icon_id": "11067838",
+      "name": "购物车",
+      "font_class": "gouwuche",
+      "unicode": "e603",
+      "unicode_decimal": 58883
+    },
+    {
+      "icon_id": "11672143",
+      "name": "闲置换钱",
+      "font_class": "xianzhihuanqian",
+      "unicode": "e94a",
+      "unicode_decimal": 59722
+    }
+  ]
+}

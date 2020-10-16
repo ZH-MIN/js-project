@@ -1,0 +1,89 @@
+body {
+	margin: 0;
+	padding: 0;
+	background-color: #324252;
+}
+
+h1 {
+	margin: 40px auto;
+	text-align: center;
+	color: #09fbd2;
+}
+
+.menu {
+	width: 400px;
+	margin: auto;
+	padding: 0;
+	list-style: none;
+	box-shadow: 0px 0px 25px #00000070;
+}
+
+.menu .list {
+	width: 100%;
+	height: 50px;
+	background: #3e5165;
+	border-bottom: 1px solid #324252;
+	clear: both;
+}
+
+.menu .list:last-child {
+	border-bottom: none;
+}
+
+.menu .list a {
+	text-decoration: none;
+	color: #fff;
+	padding: 17px;
+	display: block;
+	height: 100%;
+	box-sizing: border-box;
+}
+
+.menu .list a:hover {
+	background-color: #324252;
+	transition: 500ms all;
+	color: #09fbd2;
+}
+
+.menu .list .items {
+	height: 0px;
+	overflow: hidden;
+}
+
+.menu .list .items a {
+	padding: 17px;
+}
+
+.menu .list .items a:hover {
+	background-color: #3f5d79;
+	color: #fff;
+	transition: 500ms all;
+}
+
+.menu .active>.items {
+	width: 100%;
+	height: auto;
+	padding: 0;
+	color: #fff;
+	background: #23313f;
+	transition: 500ms all;
+	float: left;
+}
+
+.menu .active>.items li {
+	padding: 0px;
+	border-bottom: 1px solid #324252;
+	list-style: none;
+}
+
+.menu .active>a {
+	color: #46efa4;
+}
+
+.menu .active .list {
+	background: #697d92;
+}
+
+.menu .active .list a {
+	padding: 17px;
+}

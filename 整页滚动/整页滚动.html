@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+		<style>
+			body,
+			html {
+				margin: 0;
+				padding: 0;
+			}
+
+			.bodyContentContainer {
+				width: 100%;
+				overflow: hidden;
+				position: relative;
+			}
+
+			.bodyContainer {
+				width: 100%;
+				position: relative;
+			}
+
+			.Container01 {
+				background: #00ff00;
+				
+			}
+
+			.Container02 {
+				background: #FFD700;
+			}
+
+			.Container03 {
+				background: #BA55D3;
+			}
+
+			.Container04 {
+				background: #40E0D0;
+			}
+			
+			.Container01,.Container02,.Container03,.Container04 {
+				width: 100%;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				color: #000000;
+				font-size: 200px;
+				font-weight: bold;
+			}
+
+		</style>
+	</head>
+	<body>
+		<div class="bodyContentContainer">
+			<div class="bodyContainer">
+				<div class="Container01">1</div>
+				<div class="Container02">2</div>
+				<div class="Container03">3</div>
+				<div class="Container04">4</div>
+			</div>
+		</div>
+	</body>
+
+	<script>
+		$(document).ready(function() {
+
+			var height = $(window).height();
+			$(".bodyContentContainer").css("height", height);
+
+			var divContainer = $(".bodyContainer");
+			divContainer.css("height", height * length);
+
+			var div = $(".bodyContainer div");
+			div.css("height", height);
+			//div的个数
+			var length = div.length;
+			//初始化速度
+			var speed = 1000;
+			//初始化页数
+			var page = 0;
+			//初始化向下
+			var isFinish = true;
+			var body;
+
+			//判断浏览器
+			if (navigator.userAgent.indexOf("Firefox") > 0 || navigator.userAgent.indexOf("MSIE") > 0) {
+				body = document.documentElement;
+			} else {
+				body = document.body;
+			}
+
+			//鼠标滚动
+			var scrollFunc = function(e) {
+				if (isFinish) {
+					e = e || window.event;
+					//Firefox使用detail，其他浏览器使用wheelDelta，判断滚轮上下方向
+					//detail取值±3，-3为上，+3为下；wheelDelta取值±120，+120为上，-120为下
+					if (e.wheelDelta < 0 || e.detail > 0) {
+						page++;
+						if (page >= length) {
+							return page = length - 1;
+						} else {
+							scroll(page);
+						}
+					} else if (e.wheelDelta > 0 || e.detail < 0) {
+						page--;
+						if (page < 0) {
+							return page = 0;
+						} else {
+							scroll(page);
+						}
+					}
+				}
+			};
+
+			//滚动动画
+			var scroll = function(page) {
+				//防止连续滚动
+				isFinish = false;
+				divContainer.animate({
+					//距离顶部距离=当前盒子之前的盒子总高度
+					top: -height * page
+				}, speed, function() {
+					isFinish = true;
+				});
+			};
+			
+			if (navigator.userAgent.indexOf("Firefox") > 0) {
+				if (document.addEventListener) {
+					//Firefox使用addEventListener方法绑定DomMouseScroll事件
+					document.addEventListener('DOMMouseScroll', scrollFunc, false);
+				}
+			} else {
+				//其他浏览器使用传统绑定滚轮事件mousewheel
+				document.onmousewheel = scrollFunc;
+			}
+		});
+	</script>
+</html>

@@ -1,0 +1,185 @@
+/* body,
+html {
+	padding: 0;
+	margin: 0;
+}
+
+.container {
+	max-width: 960px;
+	margin: 150px auto;
+}
+.trent-slider {
+	width: 100%;
+	height: 480px;
+	position: relative;
+	overflow: hidden;
+}
+.t-slide {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+.t-slide img {
+	width: 100%;
+	height: 100%;
+}
+.t-slider-controls {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+.t-slider-controls .arrow {
+	height: 100%;
+	width: 50px;
+	position: relative;
+	transition: .45s;
+}
+.t-slider-controls .arrow:hover {
+	background: rgba(0, 0, 0, 0.32);
+	cursor: pointer;
+}
+.t-slider-controls .right-arrow {
+	float: right;
+}
+.t-slider-controls .left-arrow {
+	float: left;
+}
+.t-slider-controls .arrow .arrow-icon {
+	width: 42px;
+	height: 42px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	color: #fff;
+	text-align: center;
+	font-size: 30px;
+	font-weight: bold;
+}
+.t-slider-controls .t-dots-container {
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	transform: translateX(-50%);
+	height: 20px;
+	width: 80px;
+}
+.t-slider-controls .t-slide-dots-wrap {
+	height: 100%;
+	width: 100%;
+	position: relative;
+}
+.t-slider-controls .t-slide-dots {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	display: flex;
+	clear: both;
+}
+.t-slider-controls .t-slide-dots .t-dot {
+	background: #fff;
+	width: 8px;
+	height: 8px;
+	margin: 5px;
+	float: left;
+	border-radius: 50%;
+	transition: .65s;
+}
+.t-slider-controls .t-slide-dots .t-dot:hover {
+	cursor: pointer;
+} */
+
+
+
+* {
+	margin: 0;
+	padding: 0;
+}
+#flash {
+	/*根据图片的大小来设置外层div的大小*/
+	width: 980px;
+	height: 545px;
+	margin: 50px auto;
+	position: relative;
+	/*设置div定位，方便之后图片及圆点位置的设定*/
+}
+#flash img {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	/*设置所有图片重叠*/
+	left: 0px;
+	top: 0px;
+	display: none;
+	/*设置所有图片隐藏，通过改变第一个图片的行间样式来使第一个图片显示*/
+}
+#flash ul {
+	width: 80px;
+	height: 20px;
+	border-radius: 20px;
+	background-color: rgba(255, 255, 255, 0.3);
+	position: absolute;
+	left: 50%;
+	bottom: 5%;
+	transform: translateX(-50%);
+	list-style: none;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+}
+#flash ul li {
+	width: 12px;
+	height: 12px;
+	background-color: #e3e3e3;
+	border-radius: 50%;
+	cursor: pointer;
+}
+#flash ul .li_1 {
+	background-color: #f40;
+	/*设置第一个圆点背景色为红色*/
+}
+#flash .span-r {
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	position: absolute;
+	right: 2%;
+	top: 50%;
+	transform: translateY(-50%);
+	background-color: rgba(255, 255, 255, 0.3);
+	cursor: pointer;
+}
+#flash .span-r span {
+	width: 100%;
+	height: 100%;
+	color: #fff;
+	font-size: xx-large;
+	font-weight: 700;
+	line-height: 50px;
+	margin-left: 12px;
+}
+#flash .span-l {
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	position: absolute;
+	left: 2%;
+	top: 50%;
+	transform: translateY(-50%);
+	background-color: rgba(255, 255, 255, 0.3);
+	cursor: pointer;
+}
+#flash .span-l span {
+	width: 100%;
+	height: 100%;
+	color: #fff;
+	font-size: xx-large;
+	font-weight: 700;
+	line-height: 50px;
+	margin-left: 12px;
+}

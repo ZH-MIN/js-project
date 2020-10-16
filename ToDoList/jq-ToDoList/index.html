@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>待办事项列表</title>
+		<style type="text/css">
+			* {
+				padding: 0;
+				margin: 0;
+			}
+
+			body {
+				background-color: #cdcdcd;
+				min-width: 600px;
+			}
+
+			header {
+				height: 50px;
+				background-color: #333;
+			}
+
+			section {
+				width: 600px;
+				margin: 0 auto;
+			}
+
+			header form {
+				width: 100%;
+				height: 50px;
+				line-height: 50px;
+			}
+
+			form label {
+				float: left;
+				font-size: 24px;
+				color: #ddd;
+			}
+
+			form #todo {
+				float: right;
+				width: 60%;
+				height: 24px;
+				border: none;
+				margin-top: 12px;
+				border-radius: 5px;
+				text-indent: 10px;
+				outline: none;
+				box-shadow: 0 1px 0 rgba(255, 255, 255, 0.25), 0 1px 6px rgba(0, 0, 0, 0.45) inset;
+			}
+
+			h2 {
+				position: relative;
+				margin: 20px 0;
+			}
+
+			h2 span {
+				position: absolute;
+				top: 50%;
+				right: 0;
+				transform: translateY(-50%);
+				padding: 0 5px;
+				background-color: #e6e6fa;
+				color: #666;
+				font-size: 14px;
+				border-radius: 50%;
+			}
+
+			ul {
+				list-style: none;
+				margin: 20px 0;
+			}
+
+			ul li {
+				position: relative;
+				height: 32px;
+				line-height: 32px;
+				padding: 5px 45px;
+				background-color: #fff;
+				border-radius: 3px;
+				border-left: 5px solid #629a9c;
+				margin-bottom: 10px;
+			}
+
+			ul>li>input {
+				position: absolute;
+				top: 50%;
+				left: 10px;
+				transform: translateY(-50%);
+				width: 22px;
+				height: 22px;
+				cursor: pointer;
+			}
+
+			.donelist>li>input {
+				opacity: 0.3;
+			}
+
+			ul p {
+				width: 500px;
+				height: 32px;
+				line-height: 32px;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				cursor: pointer;
+			}
+
+			ul a {
+				display: inline-block;
+				position: absolute;
+				top: 50%;
+				right: 10px;
+				transform: translateY(-50%);
+				text-decoration: none;
+				color: #CDCDCD;
+			}
+
+			ul a:hover {
+				color: red;
+			}
+
+			ul.donelist {
+				opacity: 0.5;
+			}
+
+			li>p>input {
+				width: 90%;
+				height: 22px;
+				line-height: 22px;
+				text-indent: 5px;
+				font-size: 16px;
+				outline: none;
+				border: 1px solid #cdcdcd;
+			}
+		</style>
+	</head>
+	<body>
+		<header>
+			<section>
+				<form action="#">
+					<label>ToDoList</label>
+					<input type="text" id="todo" autocomplete="off" placeholder="添加待办事项" />
+				</form>
+			</section>
+		</header>
+		<section>
+			<h2>正在进行<span class="todoCount"></span></h2>
+			<ul class="todolist">
+
+			</ul>
+			<h2>已经完成<span class="doneCount"></span></h2>
+			<ul class="donelist"></ul>
+		</section>
+
+		<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.js"></script>
+		<script type="text/javascript">
+			$(function() {
+				// 加载数据
+				function getData() {
+					var todolist = localStorage.getItem("todo");
+					if (todolist) {
+						// 返回json格式的数据
+						return JSON.parse(todolist);
+					} else {
+						return [];
+					}
+				}
+				// 保存数据
+				function savaData(data) {
+					var todolist = JSON.stringify(data);
+					localStorage.setItem("todo", todolist);
+				}
+
+				// 加载页面数据
+				function load() {
+					var todoCount = 0;
+					var doneCount = 0;
+					var todoStr = "";
+					var doneStr = "";
+					var todolist = getData();
+					// 判断是否有数据
+					if (todolist && todolist.length > 0) {
+						// 有数据时
+						todolist.forEach(function(data, i) {
+							if (data.done) {
+								// 已经完成
+								doneStr +=
+									`<li><input type="checkbox" checked="checked" index="${i}"><p class="p-${i}" index="${i}">${data.title}</p><a href="#" index="${i}">X</a></li>`;
+								doneCount++;
+							} else {
+								// 正在进行
+								todoStr +=
+									`<li><input type="checkbox" index="${i}"><p class="p-${i}" index="${i}">${data.title}</p><a href="#" index="${i}">X</a></li>`;
+								todoCount++;
+							}
+							$(".todolist").html(todoStr);
+							$(".donelist").html(doneStr);
+							$(".todoCount").html(todoCount);
+							$(".doneCount").html(doneCount);
+						});
+					} else {
+						// 无数据时
+						$(".todolist").html("");
+						$(".donelist").html("");
+						$(".todoCount").html(todoCount);
+						$(".doneCount").html(doneCount);
+					}
+				}
+				load();
+
+				// 添加数据
+				$("#todo").keydown(function(event) {
+					// 敲击回车键
+					if (event.keyCode === 13) {
+						// 获取输入框的值
+						var val = $(this).val();
+						if (!val) {
+							// 输入的值为空
+							alert("输入的值不能为空！")
+						} else {
+							var todolist = getData();
+							todolist.push({
+								title: val,
+								done: false
+							});
+							// 保存数据至本地存储
+							savaData(todolist);
+							// 清空输入框
+							$(this).val("");
+							// 更新数据
+							load();
+						}
+					}
+				});
+
+				// 事件代理  删除数据
+				$(".todolist").on("click", "a", function() {
+					var i = parseInt($(this).attr("index"));
+					var todolist = getData();
+					todolist.splice(i, 1);
+					// 保存数据至本地存储
+					savaData(todolist);
+					load();
+				});
+				$(".donelist").on("click", "a", function() {
+					var i = parseInt($(this).attr("index"));
+					var todolist = getData();
+					todolist.splice(i, 1);
+					// 保存数据至本地存储
+					savaData(todolist);
+					load();
+				});
+
+				// 添加已完成事项
+				$(".todolist").on("change", "input[type=checkbox]", function() {
+					var i = parseInt($(this).attr("index"));
+					upData(i, "done", true);
+				});
+
+				// 撤销已完成事项
+				$(".donelist").on("change", "input[type=checkbox]", function() {
+					var i = parseInt($(this).attr("index"));
+					upData(i, "done", false);
+				});
+
+				// 更新事项状态
+				function upData(i, key, value) {
+					var todolist = getData();
+					// 将置换的数据获取
+					var todo = todolist.splice(i, 1)[0];
+					if (key === "done") {
+						todo[key] = value;
+						todolist.splice(todolist.length, 0, todo);
+					} else {
+						todo[key] = value;
+						todolist.splice(i, 0, todo);
+					}
+					// 保存数据至本地存储
+					savaData(todolist);
+					load();
+				}
+
+				// 编辑操作
+				$(".todolist").on("click", "p", function(e){
+					$(".todolist").on("click","input",function(e){
+						// 阻止冒泡
+						e.stopPropagation();
+					});
+					var i = parseInt($(this).attr("index"));
+					var title = $(this).html();
+					var $p = $(this);
+					//给p添加input框
+					$p.html(`<input type="text" class="input-${i}" value="${title}">`);
+					var input = $(`.input-${i}`);
+					// 选中内容
+					input[0].setSelectionRange(0, input.val().length);
+					// 获取焦点
+					input.focus();
+					// 失去焦点
+					input.blur(function() {
+						if ($(this).val().length === 0) {
+							// 没有输入内容
+							$p.html(title);
+							alert("输入值不能为空");
+						} else {
+							upData(i, "title", $(this).val());
+						}
+					});
+				});
+			});
+		</script>
+	</body>
+</html>
